@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Principal {
-		public static Scanner scString=new Scanner(System.in);
+	public static Scanner scString=new Scanner(System.in);
+	public static int codPeli=1000;
+	public static int codCd=1000;
 	public static void main(String[] args) {
 
 		int dia=1;
 		int opcion=0;
 		String texto="";
+		
+		ArrayList<Pelicula> peliculasSinAlquilar=new ArrayList();
+		ArrayList<Pelicula> peliculasAlquiladas=new ArrayList();
 
+		ArrayList<Producto> cdActivo=new ArrayList();
 		
 		
 		while (true) {
@@ -37,6 +43,64 @@ public class Principal {
 		switch (opcion-1) {
 		case 0:
 			System.out.println("[1] Introducir nuevo producto");
+			
+			System.out.println("Elige el tipo de producto");
+			System.out.println("[1] Pelicula o [2] CDs");
+			opcion=introducirNumeroEntero(opcion);
+			if (opcion==1) {
+				String titulo="";
+				int tipo=0;
+				int cantidad=0;
+				System.out.println("Has elegido introducir peliculas");
+				while (true) {		
+				System.out.println("Introduce el Titulo de la Pelicula");
+				titulo=scString.nextLine();
+					if (titulo!="") {
+					break;
+					}
+				}
+				System.out.println("Tipo de Pelicula");
+				System.out.println("[1] Novedad");
+				System.out.println("[2] Semi-Novedad");
+				System.out.println("[3] Antigua");
+				while (true) {		
+					System.out.println("Introduce el tipo de Pelicula");
+				tipo=introducirNumeroEntero(opcion);
+					if (tipo>0 && tipo<4) {
+					break;
+					}
+				}
+
+				while (true) {
+					System.out.println("Introduce cantidad de pelicula");
+					cantidad = introducirNumeroEntero(opcion);
+					if (cantidad > 0) {
+						break;
+					}
+				}
+				
+				System.out.println("Cantidad " + cantidad);
+				for (int i = 0; i < cantidad; i++) {
+
+					Pelicula pelicula = new Pelicula(codPeli, titulo, tipo);
+					peliculasSinAlquilar.add(pelicula);
+					codPeli++;
+				}
+					
+						
+				
+				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+					System.out.println(peliculasSinAlquilar.get(i));
+				}
+				System.out.println("Titulo: "+titulo+" Tipo: "+tipo+" Tamaño ArraySinAlquilar: "+peliculasSinAlquilar.size());
+
+			}
+			
+			if (opcion==2) {
+				System.out.println("Has elegido introducir CDs");
+				
+				
+			}
 			break;
 		case 1:
 			System.out.println("[2] Eliminar producto");
