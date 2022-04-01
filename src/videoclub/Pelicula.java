@@ -22,6 +22,11 @@ public class Pelicula extends Producto{
 		this.tipo = tipo;
 	}	
 	
+	
+	public Pelicula() {
+		super();
+	}
+
 	//----Setters && Getters----//
 	
 	public boolean isAlquiler() {

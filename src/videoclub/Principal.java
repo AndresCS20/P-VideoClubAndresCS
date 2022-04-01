@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class Principal {
 	public static Scanner scString=new Scanner(System.in);
-	public static int codPeli=1000;
-	public static int codCd=1000;
+	public static int codPeli=10000;
+	public static int codCd=20000;
 	public static void main(String[] args) {
 
 		int dia=1;
@@ -43,10 +43,11 @@ public class Principal {
 		switch (opcion-1) {
 		case 0:
 			System.out.println("[1] Introducir nuevo producto");
-			
+			do {
 			System.out.println("Elige el tipo de producto");
 			System.out.println("[1] Pelicula o [2] CDs");
 			opcion=introducirNumeroEntero(opcion);
+			}while (opcion<1 || opcion>2);
 			if (opcion==1) {
 				String titulo="";
 				int tipo=0;
@@ -86,27 +87,76 @@ public class Principal {
 					peliculasSinAlquilar.add(pelicula);
 					codPeli++;
 				}
-					
-						
-				
-				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
-					System.out.println(peliculasSinAlquilar.get(i));
-				}
-				System.out.println("Titulo: "+titulo+" Tipo: "+tipo+" Tamaño ArraySinAlquilar: "+peliculasSinAlquilar.size());
-
 			}
 			
 			if (opcion==2) {
 				System.out.println("Has elegido introducir CDs");
+				String titulo="";
+				String autor="";
+				int cantidad=0;
+				double precio=0.0;
+				while (true) {		
+				System.out.println("Introduce el Titulo del CD");
+				titulo=scString.nextLine();
+					if (titulo!="") {
+					break;
+					}
+				}
+				while (true) {		
+				System.out.println("Introduce el nombre del Grupo o Cantante");
+				autor=scString.nextLine();
+					if (autor!="") {
+					break;
+					}
+				}
+				while (true) {
+					System.out.println("Introduce precio de CDs");
+					precio = introducirNumeroDecimal(opcion);
+					if (precio > 0.0) {
+						break;
+					}
+				}
+				while (true) {
+					System.out.println("Introduce cantidad de CDs");
+					cantidad = introducirNumeroEntero(opcion);
+					if (cantidad > 0) {
+						break;
+					}
+				}
 				
-				
+				System.out.println("Cantidad " + cantidad);
+				for (int i = 0; i < cantidad; i++) {
+
+					Cd cd = new Cd(codCd, titulo,autor, precio);
+					cdActivo.add(cd);
+					codCd++;
+				}			
 			}
 			break;
 		case 1:
 			System.out.println("[2] Eliminar producto");
+			do {
+			System.out.println("Elige el tipo de producto");
+			System.out.println("[1] Pelicula o [2] CDs");
+			opcion=introducirNumeroEntero(opcion);
+			}while (opcion<1 || opcion>2);
+			
+			if (opcion==1) {
+				
+				System.out.println("Has elegido eliminar una pelicula ¿Cual quieres eliminar?");
+				//Incluir peliculas que esten en alquiler
+			}
 			break;
 		case 2:
+			if (peliculasAlquiladas.size()>0 ||peliculasSinAlquilar.size()>0)
 			System.out.println("[3] Ver listado de peliculas");
+			for (int i=0; i<peliculasAlquiladas.size(); i++) {
+				System.out.println(peliculasAlquiladas.get(i));
+			}
+			
+			for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+				System.out.println(peliculasSinAlquilar.get(i));
+			}
 			break;
 		case 3:
 			System.out.println("[4] Ver listado de CDs");

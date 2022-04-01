@@ -11,6 +11,11 @@ public class Cd  extends Producto {
 	
 	//---------Metodos----------//
 	
+	@Override
+	public String toString() {
+		return "CD | CodCD:"+this.getCodproducto()+" | Titulo: "+this.getTitulo()+" | Grupo/Cantante: "+autor+" | Precio: "+precio;
+	}
+	
 	//------Constructores-------//
 
 	public Cd(int codproducto, String titulo, String autor, double precio) {
@@ -33,6 +38,8 @@ public class Cd  extends Producto {
 	}
 	public void setPrecio(double precio) {
 		this.precio = precio;
-	}	
+	}
+
+	
 	
 }
