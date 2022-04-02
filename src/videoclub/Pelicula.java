@@ -12,7 +12,19 @@ public class Pelicula extends Producto{
 	
 	@Override
 	public String toString() {
-		return "Pelicula [codpelicula= "+this.getCodproducto()+"titulo=" + this.getTipo()+ ", tipo=" + tipo + "]";
+		String tipoPeli="";
+		switch (this.tipo) {
+		case 1:
+			tipoPeli="Novedad";
+			break;
+		case 2:
+			tipoPeli="Semi-Novedad";
+			break;
+		case 3:
+			tipoPeli="Antigua";
+			break;
+		}
+		return "Pelicula | CodPeli:"+this.getCodproducto()+" | Titulo: "+this.getTitulo()+" | Tipo: "+tipoPeli;
 	}	
 	
 	//------Constructores-------//
