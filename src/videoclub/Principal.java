@@ -42,229 +42,26 @@ public class Principal {
 		
 		switch (opcion-1) {
 		case 0:
-			System.out.println("[1] Introducir nuevo producto");
-			do {
-				System.out.println("Elige el tipo de producto");
-				System.out.println("[1] Pelicula o [2] CDs");
-				opcion = introducirNumeroEntero(opcion);
-			} while (opcion < 1 || opcion > 2);
-			if (opcion == 1) {
-				String titulo = "";
-				int tipo = 0;
-				int cantidad = 0;
-				System.out.println("Has elegido introducir peliculas");
-				while (true) {
-					System.out.println("Introduce el Titulo de la Pelicula");
-					titulo = scString.nextLine();
-					if (titulo != "") {
-						break;
-					}
-				}
-				System.out.println("Tipo de Pelicula");
-				System.out.println("[1] Novedad");
-				System.out.println("[2] Semi-Novedad");
-				System.out.println("[3] Antigua");
-				while (true) {
-					System.out.println("Introduce el tipo de Pelicula");
-					tipo = introducirNumeroEntero(opcion);
-					if (tipo > 0 && tipo < 4) {
-						break;
-					}
-				}
-
-				while (true) {
-					System.out.println("Introduce cantidad de pelicula");
-					cantidad = introducirNumeroEntero(opcion);
-					if (cantidad > 0) {
-						break;
-					}
-				}
-
-				System.out.println("Cantidad " + cantidad);
-				for (int i = 0; i < cantidad; i++) {
-
-					Pelicula pelicula = new Pelicula(codPeli, titulo, tipo);
-					peliculasSinAlquilar.add(pelicula);
-					codPeli++;
-				}
-			}
-
-			if (opcion == 2) {
-				System.out.println("Has elegido introducir CDs");
-				String titulo = "";
-				String autor = "";
-				int cantidad = 0;
-				double precio = 0.0;
-				while (true) {
-					System.out.println("Introduce el Titulo del CD");
-					titulo = scString.nextLine();
-					if (titulo != "") {
-						break;
-					}
-				}
-				while (true) {
-					System.out.println("Introduce el nombre del Grupo o Cantante");
-					autor = scString.nextLine();
-					if (autor != "") {
-						break;
-					}
-				}
-				while (true) {
-					System.out.println("Introduce precio de CDs");
-					precio = introducirNumeroDecimal(opcion);
-					if (precio > 0.0) {
-						break;
-					}
-				}
-				while (true) {
-					System.out.println("Introduce cantidad de CDs");
-					cantidad = introducirNumeroEntero(opcion);
-					if (cantidad > 0) {
-						break;
-					}
-				}
-
-				System.out.println("Cantidad " + cantidad);
-				for (int i = 0; i < cantidad; i++) {
-
-					Cd cd = new Cd(codCd, titulo, autor, precio);
-					cdActivo.add(cd);
-					codCd++;
-				}
-			}
+			opcion = introducirProducto(opcion, peliculasSinAlquilar, cdActivo);
 			break;
 		case 1:
-			int codPeliEliminar=0;
-			System.out.println("[2] Eliminar producto");
-			do {
-			System.out.println("Elige el tipo de producto");
-			System.out.println("[1] Pelicula o [2] CDs");
-			opcion=introducirNumeroEntero(opcion);
-			}while (opcion<1 || opcion>2);
-			
-			if (opcion==1) {
-				
-				System.out.println("Has elegido eliminar una pelicula ¿Cual quieres eliminar?");
-				//Incluir peliculas que esten en alquiler
-				
-				if (peliculasAlquiladas.size() > 0) {
-					for (int i = 0; i < peliculasAlquiladas.size(); i++) {
-						System.out.println(peliculasAlquiladas.get(i));
-					}
-				}
-				if(peliculasSinAlquilar.size()>0) {
-					for (int i=0; i<peliculasSinAlquilar.size(); i++) {
-						System.out.println(peliculasSinAlquilar.get(i));
-					}
-				}
-				while (true) {
-					System.out.println("Introduce el codigo de la pelicula ");
-					codPeliEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-					if (codPeliEliminar >= 10000 && (codPeliEliminar<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() || codPeliEliminar<=peliculasAlquiladas.get(peliculasAlquiladas.size()-1).getCodproducto()) ) {
-						break;
-					}
-					else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
-				}
-				
-				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
-					if (peliculasSinAlquilar.get(i).getCodproducto()==codPeliEliminar) {
-						System.out.println("La pelicula "+peliculasSinAlquilar.get(i).getTitulo() + "(ID: "+peliculasSinAlquilar.get(i).getCodproducto()+") ha sido eliminada");
-						peliculasSinAlquilar.remove(i);
-						break;
-					}
-				}
-				
-				for (int i=0; i<peliculasAlquiladas.size(); i++) {
-					if (peliculasAlquiladas.get(i).getCodproducto()==codPeliEliminar) {
-						System.out.println("La pelicula "+peliculasAlquiladas.get(i).getTitulo() + "(ID: "+peliculasAlquiladas.get(i).getCodproducto()+") ha sido eliminada");
-						peliculasAlquiladas.remove(i);
-						break;
-					}
-				}
-				
-			}
+			opcion = eliminarProducto(opcion, peliculasSinAlquilar, peliculasAlquiladas, cdActivo);
 			break;
 		case 2:
-			System.out.println("[3] Ver listado de peliculas");
-			if (peliculasAlquiladas.size()>0 ||peliculasSinAlquilar.size()>0) {
-			if (peliculasAlquiladas.size() > 0) {
-				for (int i = 0; i < peliculasAlquiladas.size(); i++) {
-					System.out.println(peliculasAlquiladas.get(i));
-				}
-			}
-			if(peliculasSinAlquilar.size()>0) {
-				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
-					System.out.println(peliculasSinAlquilar.get(i));
-				}
-			}
-		} else System.err.println("ERROR: No hay ninguna pelicula para poder mostrar");
+			verlistadoPeliculas(peliculasSinAlquilar, peliculasAlquiladas);
 			break;
 		case 3:
-			System.out.println("[4] Ver listado de CDs");
-			if (cdActivo.size()>0) {
-			if (cdActivo.size() > 0) {
-				for (int i = 0; i < cdActivo.size(); i++) {
-					System.out.println(cdActivo.get(i));
-				}
-			}
-		} else System.err.println("ERROR: No hay ningun CD para poder mostrar");
+			verlistadoCDs(cdActivo);
 			break;	
 		case 4:
-			System.out.println("[5] Alquilar pelicula");
-			int codigoPeliSeleccionada=0;
-			if (peliculasSinAlquilar.size() > 0) {
-				for (int i = 0; i < peliculasSinAlquilar.size(); i++) {
-					System.out.println(peliculasSinAlquilar.get(i));
-				}			
-				while (true) {
-					System.out.println("Introduce el codigo de la pelicula ");
-					codigoPeliSeleccionada = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-					if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() ) {
-						break;
-					}
-					else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
-				}
-				
-				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
-					
-					if (peliculasSinAlquilar.get(i).getCodproducto()==codigoPeliSeleccionada) {
-						switch (peliculasSinAlquilar.get(i).getTipo()) { 
-						case 1:
-							peliculasSinAlquilar.get(i).setAlquiler(1);
-							break;
-
-						case 2:
-							peliculasSinAlquilar.get(i).setAlquiler(2);
-							break;
-							
-						case 3:
-							peliculasSinAlquilar.get(i).setAlquiler(4);
-							break;
-						}						
-						peliculasAlquiladas.add(peliculasSinAlquilar.get(i));
-						System.out.println("La pelicula "+peliculasSinAlquilar.get(i).getTitulo() + "(ID: "+peliculasSinAlquilar.get(i).getCodproducto()+") ha sido alquilada por "+peliculasSinAlquilar.get(i).getAlquiler()+" dias.");
-						peliculasSinAlquilar.remove(i);
-
-						break;
-					}
-					
-				}
-				
-			} else System.err.println("ERROR: No hay ninguna pelicula para poder alquilar");
-			
-
+			alquilarPeliculas(opcion, peliculasSinAlquilar, peliculasAlquiladas);
 			break;
 		case 5:
 			System.out.println("[6] Vender disco");
 
 			break;
 		case 6:
-			System.out.println("[7] Ver Peliculas en alquiler");		
-			if (peliculasAlquiladas.size() > 0) {
-				for (int i = 0; i < peliculasAlquiladas.size(); i++) {
-					System.out.println(peliculasAlquiladas.get(i));
-				}
-			} else System.err.println("ERROR: No hay ninguna pelicula en alquiler para poder mostrar");
+			verPeliculasenAlquiler(peliculasAlquiladas);
 			break;
 		case 7:
 			System.out.println("[8] Ver ganancias");
@@ -281,6 +78,304 @@ public class Principal {
 			break;
 			}
 		dia++;
+		}
+	}
+
+
+
+	private static void verPeliculasenAlquiler(ArrayList<Pelicula> peliculasAlquiladas) {
+		System.out.println("[7] Ver Peliculas en alquiler");		
+		if (peliculasAlquiladas.size() > 0) {
+			for (int i = 0; i < peliculasAlquiladas.size(); i++) {
+				System.out.println(peliculasAlquiladas.get(i));
+			}
+		} else System.err.println("ERROR: No hay ninguna pelicula en alquiler para poder mostrar");
+	}
+
+
+
+	private static void alquilarPeliculas(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,
+			ArrayList<Pelicula> peliculasAlquiladas) {
+		System.out.println("[5] Alquilar pelicula");
+		int codigoPeliSeleccionada=0;
+		if (peliculasSinAlquilar.size() > 0) {
+			for (int i = 0; i < peliculasSinAlquilar.size(); i++) {
+				System.out.println(peliculasSinAlquilar.get(i));
+			}			
+			while (true) {
+				System.out.println("Introduce el codigo de la pelicula ");
+				codigoPeliSeleccionada = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
+				if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() ) {
+					break;
+				}
+				else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
+			}
+			
+			for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+				
+				if (peliculasSinAlquilar.get(i).getCodproducto()==codigoPeliSeleccionada) {
+					switch (peliculasSinAlquilar.get(i).getTipo()) { 
+					case 1:
+						peliculasSinAlquilar.get(i).setAlquiler(1);
+						break;
+
+					case 2:
+						peliculasSinAlquilar.get(i).setAlquiler(2);
+						break;
+						
+					case 3:
+						peliculasSinAlquilar.get(i).setAlquiler(4);
+						break;
+					}						
+					peliculasAlquiladas.add(peliculasSinAlquilar.get(i));
+					System.out.println("La pelicula "+peliculasSinAlquilar.get(i).getTitulo() + "(ID: "+peliculasSinAlquilar.get(i).getCodproducto()+") ha sido alquilada por "+peliculasSinAlquilar.get(i).getAlquiler()+" dias.");
+					peliculasSinAlquilar.remove(i);
+
+					break;
+				}
+				
+			}
+			
+		} else System.err.println("ERROR: No hay ninguna pelicula para poder alquilar");
+	}
+
+
+
+	private static void verlistadoCDs(ArrayList<Producto> cdActivo) {
+		System.out.println("[4] Ver listado de CDs");
+		if (cdActivo.size()>0) {
+		if (cdActivo.size() > 0) {
+			for (int i = 0; i < cdActivo.size(); i++) {
+				System.out.println(cdActivo.get(i));
+			}
+		}
+} else System.err.println("ERROR: No hay ningun CD para poder mostrar");
+	}
+
+
+
+	private static void verlistadoPeliculas(ArrayList<Pelicula> peliculasSinAlquilar,
+			ArrayList<Pelicula> peliculasAlquiladas) {
+		System.out.println("[3] Ver listado de peliculas");
+		if (peliculasAlquiladas.size()>0 ||peliculasSinAlquilar.size()>0) {
+		if (peliculasAlquiladas.size() > 0) {
+			for (int i = 0; i < peliculasAlquiladas.size(); i++) {
+				System.out.println(peliculasAlquiladas.get(i));
+			}
+		}
+		if(peliculasSinAlquilar.size()>0) {
+			for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+				System.out.println(peliculasSinAlquilar.get(i));
+			}
+		}
+} else System.err.println("ERROR: No hay ninguna pelicula para poder mostrar");
+	}
+
+
+
+	private static int eliminarProducto(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,
+			ArrayList<Pelicula> peliculasAlquiladas, ArrayList<Producto> cdActivo) {
+		System.out.println("[2] Eliminar producto");
+		do {
+		System.out.println("Elige el tipo de producto");
+		System.out.println("[1] Pelicula o [2] CDs");
+		opcion=introducirNumeroEntero(opcion);
+		}while (opcion<1 || opcion>2);
+		
+		eliminarPeliculas(opcion, peliculasSinAlquilar, peliculasAlquiladas);
+		eliminarCD(opcion, cdActivo);
+		return opcion;
+	}
+
+
+
+	private static void eliminarPeliculas(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,
+			ArrayList<Pelicula> peliculasAlquiladas) {
+		//Eliminar Peliculas
+		if (opcion==1) {			
+			int codPeliEliminar=0;
+			if (peliculasAlquiladas.size()>0 ||peliculasSinAlquilar.size()>0) {
+			System.out.println("Has elegido eliminar una pelicula ¿Cual quieres eliminar?");
+			if (peliculasAlquiladas.size() > 0) {
+				for (int i = 0; i < peliculasAlquiladas.size(); i++) {
+					System.out.println(peliculasAlquiladas.get(i));
+				}
+			}
+			if(peliculasSinAlquilar.size()>0) {
+				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+					System.out.println(peliculasSinAlquilar.get(i));
+				}
+			}
+			while (true) {
+				System.out.println("Introduce el codigo de la pelicula ");
+				codPeliEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
+				if (codPeliEliminar >= 10000 && (codPeliEliminar<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() || codPeliEliminar<=peliculasAlquiladas.get(peliculasAlquiladas.size()-1).getCodproducto()) ) {
+					break;
+				}
+				else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
+			}
+			
+			for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+				if (peliculasSinAlquilar.get(i).getCodproducto()==codPeliEliminar) {
+					System.out.println("La pelicula "+peliculasSinAlquilar.get(i).getTitulo() + "(ID: "+peliculasSinAlquilar.get(i).getCodproducto()+") ha sido eliminada");
+					peliculasSinAlquilar.remove(i);
+					break;
+				}
+			}
+			
+			for (int i=0; i<peliculasAlquiladas.size(); i++) {
+				if (peliculasAlquiladas.get(i).getCodproducto()==codPeliEliminar) {
+					System.out.println("La pelicula "+peliculasAlquiladas.get(i).getTitulo() + "(ID: "+peliculasAlquiladas.get(i).getCodproducto()+") ha sido eliminada");
+					peliculasAlquiladas.remove(i);
+					break;
+				}
+			}
+		} else System.out.println("ERROR: No hay peliculas disponibles para eliminar");
+			
+		}
+	}
+
+
+
+	private static void eliminarCD(int opcion, ArrayList<Producto> cdActivo) {
+		//Eliminar CDs	
+		if (opcion==2) {
+			int cdEliminar=0;
+			if (cdActivo.size()>0) {
+			System.out.println("Has elegido eliminar una CD ¿Cual quieres eliminar?");
+			
+			if (cdActivo.size() > 0) {
+				for (int i = 0; i < cdActivo.size(); i++) {
+					System.out.println(cdActivo.get(i));
+				}
+			}
+			while (true) {
+				System.out.println("Introduce el codigo del CD ");
+				cdEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
+				if (cdEliminar >= 20000 && cdEliminar<=cdActivo.get(cdActivo.size()-1).getCodproducto()) {
+					break;
+				}
+				else System.out.println("ERROR: Ese codigo no corresponde con ningun CD disponible");
+			}
+			
+			for (int i=0; i<cdActivo.size(); i++) {
+				if (cdActivo.get(i).getCodproducto()==cdEliminar) {
+					System.out.println("El CD "+cdActivo.get(i).getTitulo() + "(ID: "+cdActivo.get(i).getCodproducto()+") ha sido eliminado");
+					cdActivo.remove(i);
+					break;
+				}
+			}
+			
+		} else System.err.println("ERROR: No hay CD disponibles para eliminar");
+			
+		}
+	}
+
+
+
+	private static int introducirProducto(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,ArrayList<Producto> cdActivo) {
+		System.out.println("[1] Introducir nuevo producto");
+		do {
+			System.out.println("Elige el tipo de producto");
+			System.out.println("[1] Pelicula o [2] CDs");
+			opcion = introducirNumeroEntero(opcion);
+		} while (opcion < 1 || opcion > 2);
+		introducirPeliculas(opcion, peliculasSinAlquilar);
+
+		introducirCDs(opcion, cdActivo);
+		return opcion;
+	}
+
+
+
+	private static void introducirPeliculas(int opcion, ArrayList<Pelicula> peliculasSinAlquilar) {
+		if (opcion == 1) {
+			String titulo = "";
+			int tipo = 0;
+			int cantidad = 0;
+			System.out.println("Has elegido introducir peliculas");
+			while (true) {
+				System.out.println("Introduce el Titulo de la Pelicula");
+				titulo = scString.nextLine();
+				if (titulo != "") {
+					break;
+				}
+			}
+			System.out.println("Tipo de Pelicula");
+			System.out.println("[1] Novedad");
+			System.out.println("[2] Semi-Novedad");
+			System.out.println("[3] Antigua");
+			while (true) {
+				System.out.println("Introduce el tipo de Pelicula");
+				tipo = introducirNumeroEntero(opcion);
+				if (tipo > 0 && tipo < 4) {
+					break;
+				}
+			}
+
+			while (true) {
+				System.out.println("Introduce cantidad de pelicula");
+				cantidad = introducirNumeroEntero(opcion);
+				if (cantidad > 0) {
+					break;
+				}
+			}
+
+			System.out.println("Cantidad " + cantidad);
+			for (int i = 0; i < cantidad; i++) {
+
+				Pelicula pelicula = new Pelicula(codPeli, titulo, tipo);
+				peliculasSinAlquilar.add(pelicula);
+				codPeli++;
+			}
+		}
+	}
+
+
+
+	private static void introducirCDs(int opcion, ArrayList<Producto> cdActivo) {
+		if (opcion == 2) {
+			System.out.println("Has elegido introducir CDs");
+			String titulo = "";
+			String autor = "";
+			int cantidad = 0;
+			double precio = 0.0;
+			while (true) {
+				System.out.println("Introduce el Titulo del CD");
+				titulo = scString.nextLine();
+				if (titulo != "") {
+					break;
+				}
+			}
+			while (true) {
+				System.out.println("Introduce el nombre del Grupo o Cantante");
+				autor = scString.nextLine();
+				if (autor != "") {
+					break;
+				}
+			}
+			while (true) {
+				System.out.println("Introduce precio de CDs");
+				precio = introducirNumeroDecimal(opcion);
+				if (precio > 0.0) {
+					break;
+				}
+			}
+			while (true) {
+				System.out.println("Introduce cantidad de CDs");
+				cantidad = introducirNumeroEntero(opcion);
+				if (cantidad > 0) {
+					break;
+				}
+			}
+
+			System.out.println("Cantidad " + cantidad);
+			for (int i = 0; i < cantidad; i++) {
+
+				Cd cd = new Cd(codCd, titulo, autor, precio);
+				cdActivo.add(cd);
+				codCd++;
+			}
 		}
 	}
 
