@@ -4,7 +4,7 @@ public class Pelicula extends Producto{
 
 	//---------Atributos--------//
 	
-	private boolean alquiler=false;
+	private int alquiler=0;
 	private int tipo=0;
 
 	
@@ -41,11 +41,11 @@ public class Pelicula extends Producto{
 
 	//----Setters && Getters----//
 	
-	public boolean isAlquiler() {
+	public int getAlquiler() {
 		return alquiler;
 	}
 
-	public void setAlquiler(boolean alquiler) {
+	public void setAlquiler(int alquiler) {
 		this.alquiler = alquiler;
 	}
 	public int getTipo() {

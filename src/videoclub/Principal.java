@@ -174,18 +174,65 @@ public class Principal {
 			break;	
 		case 4:
 			System.out.println("[5] Alquilar pelicula");
+			int codigoPeliSeleccionada=0;
+			if (peliculasSinAlquilar.size() > 0) {
+				for (int i = 0; i < peliculasSinAlquilar.size(); i++) {
+					System.out.println(peliculasSinAlquilar.get(i));
+				}			
+				while (true) {
+					System.out.println("Introduce el codigo de la pelicula ");
+					codigoPeliSeleccionada = introducirNumeroEntero(opcion);
+					if (codigoPeliSeleccionada > 0) {
+						break;
+					}
+				}
+				
+				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+					
+					if (peliculasSinAlquilar.get(i).getCodproducto()==codigoPeliSeleccionada) {
+						switch (peliculasSinAlquilar.get(i).getTipo()) { 
+						case 1:
+							peliculasSinAlquilar.get(i).setAlquiler(1);
+							break;
+
+						case 2:
+							peliculasSinAlquilar.get(i).setAlquiler(2);
+							break;
+							
+						case 3:
+							peliculasSinAlquilar.get(i).setAlquiler(4);
+							break;
+						}						
+						peliculasAlquiladas.add(peliculasSinAlquilar.get(i));
+						System.out.println("La pelicula "+peliculasSinAlquilar.get(i).getTitulo() + "(ID: "+peliculasSinAlquilar.get(i).getCodproducto()+") ha sido alquilada por "+peliculasSinAlquilar.get(i).getAlquiler()+" dias.");
+						peliculasSinAlquilar.remove(i);
+
+						break;
+					}
+					
+				}
+				
+			} else System.err.println("ERROR: No hay ninguna pelicula para poder alquilar");
+			
+
 			break;
 		case 5:
-			System.out.println("[6] Ver peliculas en alquiler");
+			System.out.println("[6] Vender disco");
+
 			break;
 		case 6:
-			System.out.println("[7] Ver ganancias");
+			System.out.println("[7] Ver Peliculas en alquiler");		
+			if (peliculasAlquiladas.size() > 0) {
+				for (int i = 0; i < peliculasAlquiladas.size(); i++) {
+					System.out.println(peliculasAlquiladas.get(i));
+				}
+			} else System.err.println("ERROR: No hay ninguna pelicula en alquiler para poder mostrar");
 			break;
 		case 7:
 			System.out.println("[8] Ver ganancias");
 			break;
 		case 8:
-			System.out.println("[9] Pasando al siguiente dia...\n");
+			System.out.println("[9] Pasando al siguiente dia...\n"); //Meter modulo que reste dias a las peliculas y que en caso de que el nº de dias sea 0 quitarlas de alquiler (mandando un mensaje)
 			break;				
 		}
 		
