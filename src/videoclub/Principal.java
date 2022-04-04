@@ -134,6 +134,7 @@ public class Principal {
 			}
 			break;
 		case 1:
+			int codPeliEliminar=0;
 			System.out.println("[2] Eliminar producto");
 			do {
 			System.out.println("Elige el tipo de producto");
@@ -145,6 +146,42 @@ public class Principal {
 				
 				System.out.println("Has elegido eliminar una pelicula ¿Cual quieres eliminar?");
 				//Incluir peliculas que esten en alquiler
+				
+				if (peliculasAlquiladas.size() > 0) {
+					for (int i = 0; i < peliculasAlquiladas.size(); i++) {
+						System.out.println(peliculasAlquiladas.get(i));
+					}
+				}
+				if(peliculasSinAlquilar.size()>0) {
+					for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+						System.out.println(peliculasSinAlquilar.get(i));
+					}
+				}
+				while (true) {
+					System.out.println("Introduce el codigo de la pelicula ");
+					codPeliEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
+					if (codPeliEliminar >= 10000 && (codPeliEliminar<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() || codPeliEliminar<=peliculasAlquiladas.get(peliculasAlquiladas.size()-1).getCodproducto()) ) {
+						break;
+					}
+					else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
+				}
+				
+				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
+					if (peliculasSinAlquilar.get(i).getCodproducto()==codPeliEliminar) {
+						System.out.println("La pelicula "+peliculasSinAlquilar.get(i).getTitulo() + "(ID: "+peliculasSinAlquilar.get(i).getCodproducto()+") ha sido eliminada");
+						peliculasSinAlquilar.remove(i);
+						break;
+					}
+				}
+				
+				for (int i=0; i<peliculasAlquiladas.size(); i++) {
+					if (peliculasAlquiladas.get(i).getCodproducto()==codPeliEliminar) {
+						System.out.println("La pelicula "+peliculasAlquiladas.get(i).getTitulo() + "(ID: "+peliculasAlquiladas.get(i).getCodproducto()+") ha sido eliminada");
+						peliculasAlquiladas.remove(i);
+						break;
+					}
+				}
+				
 			}
 			break;
 		case 2:
@@ -181,10 +218,11 @@ public class Principal {
 				}			
 				while (true) {
 					System.out.println("Introduce el codigo de la pelicula ");
-					codigoPeliSeleccionada = introducirNumeroEntero(opcion);
-					if (codigoPeliSeleccionada > 0) {
+					codigoPeliSeleccionada = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
+					if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() ) {
 						break;
 					}
+					else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
 				}
 				
 				for (int i=0; i<peliculasSinAlquilar.size(); i++) {
