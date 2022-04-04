@@ -7,6 +7,9 @@ public class Principal {
 	public static Scanner scString=new Scanner(System.in);
 	public static int codPeli=10000;
 	public static int codCd=20000;
+	public static double beneficioventaCD=0.0;
+	public static double beneficioalquilerPelicula=0.0;
+	public static double beneficioGlobal=0.0;
 	public static void main(String[] args) {
 
 		int dia=1;
@@ -16,10 +19,11 @@ public class Principal {
 		ArrayList<Pelicula> peliculasSinAlquilar=new ArrayList();
 		ArrayList<Pelicula> peliculasAlquiladas=new ArrayList();
 
-		ArrayList<Producto> cdActivo=new ArrayList();
+		ArrayList<Cd> cdActivo=new ArrayList();
 		
 		
-		while (true) {
+		while (true) { //While True del programa en general
+		while (true) { //While true del menu 
 		do {
 		System.out.println("MENU: DIA "+dia);
 		System.out.println("1.-Introducir nuevo producto.");
@@ -57,21 +61,57 @@ public class Principal {
 			alquilarPeliculas(opcion, peliculasSinAlquilar, peliculasAlquiladas);
 			break;
 		case 5:
-			System.out.println("[6] Vender disco");
-
+			venderDisco(opcion, cdActivo);	
 			break;
 		case 6:
 			verPeliculasenAlquiler(peliculasAlquiladas);
 			break;
 		case 7:
 			System.out.println("[8] Ver ganancias");
-			break;
-		case 8:
-			System.out.println("[9] Pasando al siguiente dia...\n"); //Meter modulo que reste dias a las peliculas y que en caso de que el nº de dias sea 0 quitarlas de alquiler (mandando un mensaje)
-			break;				
+			System.out.println("[$] Ganancias por alquiler de Peliculas: "+beneficioalquilerPelicula);
+			System.out.println("[$] Ganancias por venta de Discos: "+beneficioventaCD);
+			System.out.println("[$$]Ganancias globales (Alquiler de Peliculas + Ventas de Discos): "+beneficioGlobal);
+			break;			
 		}
 		
-		
+		if (opcion == 9) {
+			// Meter modulo que reste dias a las peliculas y que en caso de que el nº de dias sea 0 quitarlas de alquiler (mandando un mensaje)
+			texto = "";
+			while (true) {
+				System.out.println("[9] Desea pasar al siguiente dia (s/n)?");
+				texto = scString.nextLine();
+				if (texto.equalsIgnoreCase("s") || texto.equalsIgnoreCase("n")) {
+					break;
+				}
+			}
+			
+			for (int i=0; i<peliculasAlquiladas.size(); i++) {
+				//Cuando tienes un dia de alquiler durante ese dia se muestra en ver peliculas alquiladas
+				//pero cuando vas a pasar de dia le quitas ese dia y lo quitas de peliculas alquiladas pasandolo a peliculas sin alquiler
+				
+				peliculasAlquiladas.get(i).setAlquiler(peliculasAlquiladas.get(i).getAlquiler()-1);
+				if (peliculasAlquiladas.get(i).getTipo()==1) {
+					beneficioalquilerPelicula+=3;
+					beneficioGlobal+=3;
+				}
+				if (peliculasAlquiladas.get(i).getTipo()==2) {
+					beneficioalquilerPelicula+=2;
+					beneficioGlobal+=2;
+				}
+				if (peliculasAlquiladas.get(i).getTipo()==3) {
+					beneficioalquilerPelicula+=1;
+					beneficioGlobal+=1;
+				}
+				
+				
+			}
+			
+			
+			
+			if (texto.equalsIgnoreCase("s"))
+				break;
+		}
+	}
 		//Opcion para terminar el programa
 		if (opcion==10) {
 			System.out.println("\n[10]Terminar el Programa, ha pasado "+dia+" dias activo.");
@@ -79,6 +119,40 @@ public class Principal {
 			}
 		dia++;
 		}
+	}
+
+
+
+	private static void venderDisco(int opcion, ArrayList<Cd> cdActivo) {
+		int cdVender=0;
+		if (cdActivo.size()>0) {
+		System.out.println("[6] Vender disco");
+		
+		for (int i=0; i<cdActivo.size(); i++) {
+			System.out.println(cdActivo.get(i));
+			}
+		while (true) {
+			System.out.println("Introduce el codigo del CD ");
+			cdVender = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
+			if (cdVender >= 20000 && cdVender<=cdActivo.get(cdActivo.size()-1).getCodproducto() ) {
+				break;
+			}
+			else System.out.println("ERROR: Ese codigo no corresponde con ningun CD disponible");
+		}
+		
+		for (int i=0; i<cdActivo.size(); i++) {
+			
+			if (cdVender==cdActivo.get(i).getCodproducto()) {
+				
+				beneficioventaCD+=cdActivo.get(i).getPrecio();
+				beneficioGlobal+=cdActivo.get(i).getPrecio();
+				System.out.println("El disco "+cdActivo.get(i).getTitulo()+" (ID: "+cdActivo.get(i).getCodproducto()+") de "+cdActivo.get(i).getAutor()+" se ha vendido por "+cdActivo.get(i).getPrecio()+" euros.");
+				cdActivo.remove(i);
+			}
+			
+		}
+		
+		}else System.out.println("ERROR: No hay CD disponibles para vender");
 	}
 
 
@@ -141,7 +215,7 @@ public class Principal {
 
 
 
-	private static void verlistadoCDs(ArrayList<Producto> cdActivo) {
+	private static void verlistadoCDs(ArrayList<Cd> cdActivo) {
 		System.out.println("[4] Ver listado de CDs");
 		if (cdActivo.size()>0) {
 		if (cdActivo.size() > 0) {
@@ -174,7 +248,7 @@ public class Principal {
 
 
 	private static int eliminarProducto(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,
-			ArrayList<Pelicula> peliculasAlquiladas, ArrayList<Producto> cdActivo) {
+			ArrayList<Pelicula> peliculasAlquiladas, ArrayList<Cd> cdActivo) {
 		System.out.println("[2] Eliminar producto");
 		do {
 		System.out.println("Elige el tipo de producto");
@@ -237,7 +311,7 @@ public class Principal {
 
 
 
-	private static void eliminarCD(int opcion, ArrayList<Producto> cdActivo) {
+	private static void eliminarCD(int opcion, ArrayList<Cd> cdActivo) {
 		//Eliminar CDs	
 		if (opcion==2) {
 			int cdEliminar=0;
@@ -273,7 +347,7 @@ public class Principal {
 
 
 
-	private static int introducirProducto(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,ArrayList<Producto> cdActivo) {
+	private static int introducirProducto(int opcion, ArrayList<Pelicula> peliculasSinAlquilar,ArrayList<Cd> cdActivo) {
 		System.out.println("[1] Introducir nuevo producto");
 		do {
 			System.out.println("Elige el tipo de producto");
@@ -333,7 +407,7 @@ public class Principal {
 
 
 
-	private static void introducirCDs(int opcion, ArrayList<Producto> cdActivo) {
+	private static void introducirCDs(int opcion, ArrayList<Cd> cdActivo) {
 		if (opcion == 2) {
 			System.out.println("Has elegido introducir CDs");
 			String titulo = "";
