@@ -22,103 +22,129 @@ public class Principal {
 		ArrayList<Cd> cdActivo=new ArrayList();
 		
 		
-		while (true) { //While True del programa en general
-		while (true) { //While true del menu 
-		do {
-		System.out.println("MENU: DIA "+dia);
-		System.out.println("1.-Introducir nuevo producto.");
-		System.out.println("2.-Eliminar producto");
-		System.out.println("3.-Ver listado de peliculas");
-		System.out.println("4.-Ver listado de CDs");
-		System.out.println("5.-Alquilar pelicula");
-		System.out.println("6.-Vender disco");
-		System.out.println("7.-Ver peliculas en alquiler");
-		System.out.println("8.-Ver ganancias");
-		System.out.println("9.-Pasar al dia siguiente");
-		System.out.println("10.-Terminar el programa");
-		System.out.println("----------------------------------");
-		
+		while (true) { // While True del programa en general
+			while (true) { // While true del menu
+				do {
+					System.out.println("MENU: DIA " + dia);
+					System.out.println("1.-Introducir nuevo producto.");
+					System.out.println("2.-Eliminar producto");
+					System.out.println("3.-Ver listado de peliculas");
+					System.out.println("4.-Ver listado de CDs");
+					System.out.println("5.-Alquilar pelicula");
+					System.out.println("6.-Vender disco");
+					System.out.println("7.-Ver peliculas en alquiler");
+					System.out.println("8.-Ver ganancias");
+					System.out.println("9.-Pasar al dia siguiente");
+					System.out.println("10.-Terminar el programa");
+					System.out.println("----------------------------------");
 
-		System.out.println("\n[>>] Introduce un numero 1-10 para elegir una opcion del Menu");
-		opcion = introducirNumeroEntero(opcion);
-		
-		}while(opcion<0 || opcion>10);
-		
-		switch (opcion-1) {
-		case 0:
-			opcion = introducirProducto(opcion, peliculasSinAlquilar, cdActivo);
-			break;
-		case 1:
-			opcion = eliminarProducto(opcion, peliculasSinAlquilar, peliculasAlquiladas, cdActivo);
-			break;
-		case 2:
-			verlistadoPeliculas(peliculasSinAlquilar, peliculasAlquiladas);
-			break;
-		case 3:
-			verlistadoCDs(cdActivo);
-			break;	
-		case 4:
-			alquilarPeliculas(opcion, peliculasSinAlquilar, peliculasAlquiladas);
-			break;
-		case 5:
-			venderDisco(opcion, cdActivo);	
-			break;
-		case 6:
-			verPeliculasenAlquiler(peliculasAlquiladas);
-			break;
-		case 7:
-			System.out.println("[8] Ver ganancias");
-			System.out.println("[$] Ganancias por alquiler de Peliculas: "+beneficioalquilerPelicula);
-			System.out.println("[$] Ganancias por venta de Discos: "+beneficioventaCD);
-			System.out.println("[$$]Ganancias globales (Alquiler de Peliculas + Ventas de Discos): "+beneficioGlobal);
-			break;			
-		}
-		
-		if (opcion == 9) {
-			// Meter modulo que reste dias a las peliculas y que en caso de que el nº de dias sea 0 quitarlas de alquiler (mandando un mensaje)
-			texto = "";
-			while (true) {
-				System.out.println("[9] Desea pasar al siguiente dia (s/n)?");
-				texto = scString.nextLine();
-				if (texto.equalsIgnoreCase("s") || texto.equalsIgnoreCase("n")) {
+					System.out.println("\n[>>] Introduce un numero 1-10 para elegir una opcion del Menu");
+					opcion = introducirNumeroEntero(opcion);
+
+				} while (opcion < 0 || opcion > 10);
+
+				switch (opcion - 1) {
+				case 0:
+					opcion = introducirProducto(opcion, peliculasSinAlquilar, cdActivo);
+					break;
+				case 1:
+					opcion = eliminarProducto(opcion, peliculasSinAlquilar, peliculasAlquiladas, cdActivo);
+					break;
+				case 2:
+					verlistadoPeliculas(peliculasSinAlquilar, peliculasAlquiladas);
+					break;
+				case 3:
+					verlistadoCDs(cdActivo);
+					break;
+				case 4:
+					alquilarPeliculas(opcion, peliculasSinAlquilar, peliculasAlquiladas);
+					break;
+				case 5:
+					venderDisco(opcion, cdActivo);
+					break;
+				case 6:
+					verPeliculasenAlquiler(peliculasAlquiladas);
+					break;
+				case 7:
+					verGanancias();
 					break;
 				}
+
+				if (opcion == 9) {
+					// Meter modulo que reste dias a las peliculas y que en caso de que el nº de
+					// dias sea 0 quitarlas de alquiler (mandando un mensaje)
+					texto = "";
+					while (true) {
+						System.out.println("[9] Desea pasar al siguiente dia (s/n)?");
+						texto = scString.nextLine();
+						if (texto.equalsIgnoreCase("s") || texto.equalsIgnoreCase("n")) {
+							break;
+						}
+					}
+					if (texto.equalsIgnoreCase("s")) {
+						for (int i = 0; i < peliculasAlquiladas.size(); i++) { // PROBLEMA EN EL BUCLE NO RESTA DIAS Y NO QUITA TODAS LA PELICULAS DE ALQUILER
+							peliculasAlquiladas.get(i).setAlquiler(peliculasAlquiladas.get(i).getAlquiler() - 1);
+//							switch (peliculasAlquiladas.get(i).getTipo()) {
+//							case 1:
+//								beneficioalquilerPelicula += 3;
+//								beneficioGlobal += 3;
+//								break;
+//
+//							case 2:
+//								beneficioalquilerPelicula += 2;
+//								beneficioGlobal += 2;
+//								break;
+//
+//							case 3:
+//								beneficioalquilerPelicula += 1;
+//								beneficioGlobal += 1;
+//								break;
+//							}
+							
+							if(peliculasAlquiladas.get(i).getTipo()==1) {
+								
+								beneficioalquilerPelicula += 3;
+								beneficioGlobal += 3;
+							}
+
+							if(peliculasAlquiladas.get(i).getTipo()==2) {
+								beneficioalquilerPelicula += 2;
+								beneficioGlobal += 2;
+							}
+
+								if(peliculasAlquiladas.get(i).getTipo()==3) {
+								beneficioalquilerPelicula += 1;
+								beneficioGlobal += 1;
+								}
+						}
+						for (int i=0; i<peliculasAlquiladas.size(); i++) {
+						if (peliculasAlquiladas.get(i).getAlquiler() == 0) {
+							System.out.println("La Pelicula "+peliculasAlquiladas.get(i).getTitulo() +"(ID: "+peliculasAlquiladas.get(i).getCodproducto()+") ha dejado de estar en alquiler");
+							peliculasSinAlquilar.add(peliculasAlquiladas.get(i));
+							peliculasAlquiladas.remove(i);
+							}
+						}
+						break;
+					}
+				}
+				// Opcion extra  para terminar el programa
+				if (opcion == 10) {
+					System.out.println("\n[10]Terminar el Programa, ha pasado " + dia + " dias activo.");
+					System.exit(0);
+				}
 			}
-			
-			for (int i=0; i<peliculasAlquiladas.size(); i++) {
-				//Cuando tienes un dia de alquiler durante ese dia se muestra en ver peliculas alquiladas
-				//pero cuando vas a pasar de dia le quitas ese dia y lo quitas de peliculas alquiladas pasandolo a peliculas sin alquiler
-				
-				peliculasAlquiladas.get(i).setAlquiler(peliculasAlquiladas.get(i).getAlquiler()-1);
-				if (peliculasAlquiladas.get(i).getTipo()==1) {
-					beneficioalquilerPelicula+=3;
-					beneficioGlobal+=3;
-				}
-				if (peliculasAlquiladas.get(i).getTipo()==2) {
-					beneficioalquilerPelicula+=2;
-					beneficioGlobal+=2;
-				}
-				if (peliculasAlquiladas.get(i).getTipo()==3) {
-					beneficioalquilerPelicula+=1;
-					beneficioGlobal+=1;
-				}
-				
-				
-			}
-			
-			
-			
-			if (texto.equalsIgnoreCase("s"))
-				break;
+
+			dia++;
 		}
 	}
-		//Opcion para terminar el programa
-		if (opcion==10) {
-			System.out.println("\n[10]Terminar el Programa, ha pasado "+dia+" dias activo.");
-			break;
-			}
-		dia++;
-		}
+
+
+
+	private static void verGanancias() {
+		System.out.println("[8] Ver ganancias");
+		System.out.println("[$] Ganancias por alquiler de Peliculas: "+beneficioalquilerPelicula);
+		System.out.println("[$] Ganancias por venta de Discos: "+beneficioventaCD);
+		System.out.println("[$$]Ganancias globales (Alquiler de Peliculas + Ventas de Discos): "+beneficioGlobal);
 	}
 
 
@@ -133,8 +159,8 @@ public class Principal {
 			}
 		while (true) {
 			System.out.println("Introduce el codigo del CD ");
-			cdVender = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-			if (cdVender >= 20000 && cdVender<=cdActivo.get(cdActivo.size()-1).getCodproducto() ) {
+			cdVender = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000cdActivo.get(cdActivo.size()-1).getCodproducto()
+			if (cdVender >= 20000 && cdVender<=(cdActivo.size()-1)+20000 ) {
 				break;
 			}
 			else System.out.println("ERROR: Ese codigo no corresponde con ningun CD disponible");
@@ -161,7 +187,7 @@ public class Principal {
 		System.out.println("[7] Ver Peliculas en alquiler");		
 		if (peliculasAlquiladas.size() > 0) {
 			for (int i = 0; i < peliculasAlquiladas.size(); i++) {
-				System.out.println(peliculasAlquiladas.get(i));
+				System.out.println(peliculasAlquiladas.get(i)+" | Tiempo restante: "+peliculasAlquiladas.get(i).getAlquiler());
 			}
 		} else System.err.println("ERROR: No hay ninguna pelicula en alquiler para poder mostrar");
 	}
@@ -178,8 +204,8 @@ public class Principal {
 			}			
 			while (true) {
 				System.out.println("Introduce el codigo de la pelicula ");
-				codigoPeliSeleccionada = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-				if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() ) {
+				codigoPeliSeleccionada = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000  HAY QUE MODIFICAR LO QUE HAY EN EL  IF A PARTIR DE <= no sirve con la ultima pelicula
+				if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<=(peliculasSinAlquilar.size()-1)+10000  ) {
 					break;
 				}
 				else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
@@ -283,7 +309,7 @@ public class Principal {
 			while (true) {
 				System.out.println("Introduce el codigo de la pelicula ");
 				codPeliEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-				if (codPeliEliminar >= 10000 && (codPeliEliminar<=peliculasSinAlquilar.get(peliculasSinAlquilar.size()-1).getCodproducto() || codPeliEliminar<=peliculasAlquiladas.get(peliculasAlquiladas.size()-1).getCodproducto()) ) {
+				if (codPeliEliminar >= 10000 && (codPeliEliminar<=(peliculasSinAlquilar.size()-1)+10000  || codPeliEliminar<=(peliculasAlquiladas.size()-1)+10000 ) ) {
 					break;
 				}
 				else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
@@ -326,7 +352,7 @@ public class Principal {
 			while (true) {
 				System.out.println("Introduce el codigo del CD ");
 				cdEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-				if (cdEliminar >= 20000 && cdEliminar<=cdActivo.get(cdActivo.size()-1).getCodproducto()) {
+				if (cdEliminar >= 20000 && cdEliminar<=(cdActivo.size()-1)+20000 ) {
 					break;
 				}
 				else System.out.println("ERROR: Ese codigo no corresponde con ningun CD disponible");
