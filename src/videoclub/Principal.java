@@ -84,44 +84,45 @@ public class Principal {
 					if (texto.equalsIgnoreCase("s")) {
 						for (int i = 0; i < peliculasAlquiladas.size(); i++) { // PROBLEMA EN EL BUCLE NO RESTA DIAS Y NO QUITA TODAS LA PELICULAS DE ALQUILER
 							peliculasAlquiladas.get(i).setAlquiler(peliculasAlquiladas.get(i).getAlquiler() - 1);
-//							switch (peliculasAlquiladas.get(i).getTipo()) {
-//							case 1:
-//								beneficioalquilerPelicula += 3;
-//								beneficioGlobal += 3;
-//								break;
-//
-//							case 2:
-//								beneficioalquilerPelicula += 2;
-//								beneficioGlobal += 2;
-//								break;
-//
-//							case 3:
-//								beneficioalquilerPelicula += 1;
-//								beneficioGlobal += 1;
-//								break;
-//							}
-							
-							if(peliculasAlquiladas.get(i).getTipo()==1) {
-								
+							switch (peliculasAlquiladas.get(i).getTipo()) {
+							case 1:
 								beneficioalquilerPelicula += 3;
 								beneficioGlobal += 3;
-							}
+								break;
 
-							if(peliculasAlquiladas.get(i).getTipo()==2) {
+							case 2:
 								beneficioalquilerPelicula += 2;
 								beneficioGlobal += 2;
-							}
+								break;
 
-								if(peliculasAlquiladas.get(i).getTipo()==3) {
+							case 3:
 								beneficioalquilerPelicula += 1;
 								beneficioGlobal += 1;
-								}
+								break;
+							}
+							
+//							if(peliculasAlquiladas.get(i).getTipo()==1) {
+//								
+//								beneficioalquilerPelicula += 3;
+//								beneficioGlobal += 3;
+//							}
+//
+//							if(peliculasAlquiladas.get(i).getTipo()==2) {
+//								beneficioalquilerPelicula += 2;
+//								beneficioGlobal += 2;
+//							}
+//
+//								if(peliculasAlquiladas.get(i).getTipo()==3) {
+//								beneficioalquilerPelicula += 1;
+//								beneficioGlobal += 1;
+//								}
 						}
 						for (int i=0; i<peliculasAlquiladas.size(); i++) {
 						if (peliculasAlquiladas.get(i).getAlquiler() == 0) {
 							System.out.println("La Pelicula "+peliculasAlquiladas.get(i).getTitulo() +"(ID: "+peliculasAlquiladas.get(i).getCodproducto()+") ha dejado de estar en alquiler");
 							peliculasSinAlquilar.add(peliculasAlquiladas.get(i));
 							peliculasAlquiladas.remove(i);
+							i--;
 							}
 						}
 						break;
@@ -160,7 +161,7 @@ public class Principal {
 		while (true) {
 			System.out.println("Introduce el codigo del CD ");
 			cdVender = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000cdActivo.get(cdActivo.size()-1).getCodproducto()
-			if (cdVender >= 20000 && cdVender<=(cdActivo.size()-1)+20000 ) {
+			if (cdVender >= 20000 && cdVender<codCd ) {
 				break;
 			}
 			else System.out.println("ERROR: Ese codigo no corresponde con ningun CD disponible");
@@ -205,7 +206,7 @@ public class Principal {
 			while (true) {
 				System.out.println("Introduce el codigo de la pelicula ");
 				codigoPeliSeleccionada = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000  HAY QUE MODIFICAR LO QUE HAY EN EL  IF A PARTIR DE <= no sirve con la ultima pelicula
-				if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<=(peliculasSinAlquilar.size()-1)+10000  ) {
+				if (codigoPeliSeleccionada >= 10000 && codigoPeliSeleccionada<codPeli) {
 					break;
 				}
 				else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
@@ -309,7 +310,7 @@ public class Principal {
 			while (true) {
 				System.out.println("Introduce el codigo de la pelicula ");
 				codPeliEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-				if (codPeliEliminar >= 10000 && (codPeliEliminar<=(peliculasSinAlquilar.size()-1)+10000  || codPeliEliminar<=(peliculasAlquiladas.size()-1)+10000 ) ) {
+				if (codPeliEliminar >= 10000 && (codPeliEliminar<codPeli  || codPeliEliminar<codPeli) ) {
 					break;
 				}
 				else System.out.println("ERROR: Ese codigo no corresponde con ninguna pelicula disponible");
@@ -352,7 +353,7 @@ public class Principal {
 			while (true) {
 				System.out.println("Introduce el codigo del CD ");
 				cdEliminar = introducirNumeroEntero(opcion);//(peliculasSinAlquilar.size()+10000
-				if (cdEliminar >= 20000 && cdEliminar<=(cdActivo.size()-1)+20000 ) {
+				if (cdEliminar >= 20000 && cdEliminar<codCd ) {
 					break;
 				}
 				else System.out.println("ERROR: Ese codigo no corresponde con ningun CD disponible");
