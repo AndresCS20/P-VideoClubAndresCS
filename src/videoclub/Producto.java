@@ -7,9 +7,6 @@ public class Producto {
 	private int codproducto=0;
 	private String titulo="";
 
-	
-	//---------Metodos----------//
-	
 	//------Constructores-------//
 
 	public Producto(int codproducto, String titulo) {
