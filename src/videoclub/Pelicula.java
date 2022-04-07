@@ -6,7 +6,7 @@ public class Pelicula extends Producto{
 	
 	private int alquiler=0;
 	private int tipo=0;
-
+	private Cliente clientealquiler=new Cliente();
 	
 	//---------Metodos----------//
 	
@@ -54,4 +54,13 @@ public class Pelicula extends Producto{
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
+
+	public Cliente getClientealquiler() {
+		return clientealquiler;
+	}
+
+	public void setClientealquiler(Cliente clientealquiler) {
+		this.clientealquiler = clientealquiler;
+	}
+	
 }

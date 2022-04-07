@@ -7,8 +7,10 @@ public class Principal {
 	public static Scanner scString=new Scanner(System.in);
 	public static int codPeli=10000;
 	public static int codCd=20000;
+	public static int codCliente=100;
 	public static double beneficioventaCD=0.0;
 	public static double beneficioalquilerPelicula=0.0;
+	public static double beneficioPorRecargos=0.0;
 	public static double beneficioGlobal=0.0;
 	public static void main(String[] args) {
 
@@ -18,8 +20,8 @@ public class Principal {
 		
 		ArrayList<Pelicula> peliculasSinAlquilar=new ArrayList();
 		ArrayList<Pelicula> peliculasAlquiladas=new ArrayList();
-
 		ArrayList<Cd> cdActivo=new ArrayList();
+		ArrayList<Cliente> clientes=new ArrayList();
 		
 		
 		while (true) { // While True del programa en general
@@ -45,7 +47,7 @@ public class Principal {
 					System.out.println("\n[>>] Introduce un numero 1-14 para elegir una opcion del Menu");
 					opcion = introducirNumeroEntero(opcion);
 
-				} while (opcion < 0 || opcion > 13);
+				} while (opcion < 0 || opcion > 14);
 
 				//Opciones del Menu Principal (Desde la opcion 1 hasta la 12)
 				switch (opcion - 1) {
@@ -54,6 +56,11 @@ public class Principal {
 					break;
 				case 1:
 					System.out.println("[02] Dar de alta cliente");
+					
+					Cliente cliente=new Cliente();
+					cliente.intrducirCliente(codCliente);
+					clientes.add(cliente);
+					codCliente++;
 					break;
 				case 2:
 					opcion = eliminarProducto(opcion, peliculasSinAlquilar, peliculasAlquiladas, cdActivo);
@@ -65,6 +72,7 @@ public class Principal {
 					verlistadoCDs(cdActivo);
 					break;
 				case 5:
+					//Hay que hacer que introduzca  el codigo cliente y alquile una a una 
 					alquilarPeliculas(opcion, peliculasSinAlquilar, peliculasAlquiladas);
 					break;
 				case 6:
